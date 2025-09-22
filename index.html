@@ -41,7 +41,7 @@
       font-size: 1.5rem;
       text-align: center;
       color: #2E7D32; /* vert foncé */
-      flex: 1; /* prend l’espace au milieu */
+      flex: 1;
     }
 
     /* Menu header à droite */
@@ -63,6 +63,20 @@
 
     .menu button:hover {
       background: #388E3C; /* vert foncé */
+    }
+
+    /* Hamburger pour mobile */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 4px;
+    }
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: #2E7D32;
+      border-radius: 2px;
     }
 
     .container {
@@ -171,18 +185,32 @@
     /* Responsive */
     @media (max-width: 600px) {
       header {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
       }
       header h1 {
         font-size: 1.2rem;
-        flex: none;
-        margin: 0.5rem 0;
+        margin: 0 0.5rem;
+        text-align: center;
       }
       .menu {
+        display: none;
         flex-direction: column;
-        width: 100%;
-        align-items: center;
+        gap: 0.5rem;
+        position: absolute;
+        top: 60px;
+        right: 1rem;
+        background: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      }
+      .menu.active {
+        display: flex;
+      }
+      .hamburger {
+        display: flex;
       }
     }
   </style>
@@ -190,11 +218,17 @@
 <body>
 
 <header>
-  <!-- Logo à gauche -->
+  <!-- Logo -->
   <span alt="Logo" class="logo" style="font-size: 35px;">🎥 </span>
-  
 
-  <!-- Boutons à droite -->
+  <!-- Hamburger pour mobile -->
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Menu -->
   <div class="menu">
     <button>Partenaire</button>
     <button>À propos de nous</button>
@@ -243,6 +277,11 @@
 </div>
 
 <script>
+  // Menu mobile
+  function toggleMenu() {
+    document.querySelector('.menu').classList.toggle('active');
+  }
+
   // Initialisation des compteurs
   for (let i = 1; i <= 3; i++) {
     if (document.getElementById(`like-count-${i}`)) {
